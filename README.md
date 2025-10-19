@@ -11,6 +11,7 @@ It focuses on:
 
 ## 📂 Repository Structure
 
+```
 lidc_project/
 │
 ├── data/ 
@@ -30,3 +31,4 @@ lidc_project/
 ├── .gitignore # Ignores data, env, cache files
 ├── requirements.txt 
 └── README.md 
+```

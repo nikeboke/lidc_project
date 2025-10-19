@@ -1,0 +1,9 @@
+# environment
+lidc-env/
+# data + results
+data/
+results/
+# python cache
+__pycache__/
+*.pyc
+.ipynb_checkpoints/

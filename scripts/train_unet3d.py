@@ -8,7 +8,16 @@ from tqdm import tqdm
 
 from dataloader import LIDCKaggleDataset   # uses agg="soft"
 
-# -------- 3D U-Net (minimal, single-channel in/out) --------
+# -------- 3D U-Net (minimal, single-channel in an out 
+
+#Architecture: Lightweight 3D U-Net
+
+#Loss: 0.5 × BCE + 0.5 × Soft Dice
+
+#Labels: Soft-probability masks (average of 4 expert annotations)
+
+#Uncertainty: Voxel-wise variance of masks = annotator disagreement   it models aleatoric uncertainty that’s already in the data.
+
 class DoubleConv(nn.Module):
     def __init__(self, in_c, out_c):
         super().__init__()

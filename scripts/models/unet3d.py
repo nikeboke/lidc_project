@@ -1,4 +1,4 @@
-import os, random, math, argparse
+import os, random, argparse
 import numpy as np
 import torch
 import torch.nn as nn
@@ -6,28 +6,20 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, Subset
 from tqdm import tqdm
 import wandb
-from dataloader import LIDCKaggleDataset   # uses agg="soft"
+from dataloader import LIDCKaggleDataset
 
-# -------- 3D U-Net (minimal, single-channel in an out 
 
-#Architecture: Lightweight 3D U-Net
+# -------- 3D U-Net (minimal, single-channel in an out
+#  #Architecture: Lightweight 3D U-Net 
+# #Loss: 0.5 × BCE + 0.5 × Soft Dice #Labels: Soft-probability masks (average of 4 expert annotations) 
+# #Uncertainty: Voxel-wise variance of masks = annotator disagreement it models aleatoric uncertainty that’s already in the data.
 
-#Loss: 0.5 × BCE + 0.5 × Soft Dice
 
-#Labels: Soft-probability masks (average of 4 expert annotations)
-
-#Uncertainty: Voxel-wise variance of masks = annotator disagreement   it models aleatoric uncertainty that’s already in the data.
-
-# 🔐 Login to W&B
 wandb.login(key='1201b98d49797282cef724fed65c90effa1bbb0e')
+wandb.init(project="lidc_project", name="3d_unet_softlabels",
+           config={"agg": "soft", "epochs": 20, "lr": 1e-3})
 
-wandb.init(
-    project="lidc_project",
-    name="3d_unet_softlabels",
-    config={"agg": "soft", "epochs": 20, "lr": 1e-3}
-)
 
-# ---------------- 3D UNet ----------------
 class DoubleConv(nn.Module):
     def __init__(self, in_c, out_c):
         super().__init__()
@@ -66,43 +58,64 @@ class UNet3D(nn.Module):
         d1 = self.up1(d2); d1 = self.dec1(torch.cat([d1, e1], dim=1))
         return self.out(d1)
 
-# ---------------- Metrics ----------------
-def dice_score(y_pred, y_true, eps=1e-6):
-    y_pred = (y_pred > 0.5).float()
-    num = 2 * (y_pred * y_true).sum()
-    den = y_pred.sum() + y_true.sum() + eps
+# ------------------------------------------------------------------
+# Metrics & Losses
+# ------------------------------------------------------------------
+def soft_dice_loss_from_logits(logits, target, eps=1e-6):
+    """Differentiable Dice loss (no threshold)."""
+    prob = torch.sigmoid(logits)
+    num = 2 * (prob * target).sum(dim=(1,2,3,4))
+    den = prob.pow(2).sum(dim=(1,2,3,4)) + target.pow(2).sum(dim=(1,2,3,4)) + eps
+    return (1 - num / den).mean()
+
+@torch.no_grad()
+def dice_score(prob, target, thr=0.5, eps=1e-6):
+    pred = (prob > thr).float()
+    num = 2 * (pred * target).sum()
+    den = pred.sum() + target.sum() + eps
     return (num / den).item()
 
-def iou_score(y_pred, y_true, eps=1e-6):
-    y_pred = (y_pred > 0.5).float()
-    inter = (y_pred * y_true).sum()
-    union = y_pred.sum() + y_true.sum() - inter + eps
+@torch.no_grad()
+def iou_score(prob, target, thr=0.5, eps=1e-6):
+    pred = (prob > thr).float()
+    inter = (pred * target).sum()
+    union = pred.sum() + target.sum() - inter + eps
     return (inter / union).item()
 
-# ---------------- Dataloader ----------------
+# ------------------------------------------------------------------
+# Dataloader
+# ------------------------------------------------------------------
 def collate_fn(batch):
     b = batch[0]
     img = b["image"].unsqueeze(0).unsqueeze(0)
     tgt = b["target"].unsqueeze(0).unsqueeze(0)
-    img = F.interpolate(img, size=(64,128,128), mode="trilinear", align_corners=False)
-    tgt = F.interpolate(tgt, size=(64,128,128), mode="trilinear", align_corners=False)
+    TARGET_SHAPE = (16, 128, 128)   # smaller depth, avoids empty slices
+    img = F.interpolate(img, size=TARGET_SHAPE, mode="trilinear", align_corners=False)
+    tgt = F.interpolate(tgt, size=TARGET_SHAPE, mode="trilinear", align_corners=False)
     return img, tgt
 
-# ---------------- Train ----------------
+# ------------------------------------------------------------------
+# Training
+# ------------------------------------------------------------------
 def train_segmentation(data_root, epochs=20, lr=1e-3, base=16):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     ds = LIDCKaggleDataset(data_root, agg="soft", return_all_masks=False)
     n_train = int(0.8 * len(ds))
-    train_ds, val_ds = Subset(ds, range(0, n_train)), Subset(ds, range(n_train, len(ds)))
+    indices = np.arange(len(ds))
+    np.random.seed(42); np.random.shuffle(indices)
+    train_ds = Subset(ds, indices[:n_train])
+    val_ds   = Subset(ds, indices[n_train:])
+
     train_loader = DataLoader(train_ds, batch_size=1, shuffle=True, collate_fn=collate_fn)
     val_loader   = DataLoader(val_ds, batch_size=1, shuffle=False, collate_fn=collate_fn)
 
     model = UNet3D(base=base).to(device)
-    opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
-    bce = nn.BCEWithLogitsLoss()
 
-    wandb.init(project="lidc_3d_segmentation", name="unet3d_dice_iou",
-               config={"epochs": epochs, "lr": lr, "base": base, "agg": "soft"})
+    # Class imbalance fix
+    pos_weight = torch.tensor([20.0], device=device)
+    bce = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
+
+    opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
 
     best_dice = 0.0
     for epoch in range(1, epochs+1):
@@ -111,7 +124,7 @@ def train_segmentation(data_root, epochs=20, lr=1e-3, base=16):
         for img, tgt in tqdm(train_loader, desc=f"Epoch {epoch}/{epochs}"):
             img, tgt = img.to(device), tgt.to(device)
             logits = model(img)
-            loss = 0.5 * bce(logits, tgt) + 0.5 * (1 - dice_score(torch.sigmoid(logits), tgt))
+            loss = 0.5 * bce(logits, tgt) + 0.5 * soft_dice_loss_from_logits(logits, tgt)
             opt.zero_grad(); loss.backward(); opt.step()
             tr_loss += loss.item()
         tr_loss /= len(train_loader)
@@ -123,8 +136,8 @@ def train_segmentation(data_root, epochs=20, lr=1e-3, base=16):
             for img, tgt in val_loader:
                 img, tgt = img.to(device), tgt.to(device)
                 prob = torch.sigmoid(model(img))
-                val_dice += dice_score(prob, tgt)
-                val_iou += iou_score(prob, tgt)
+                val_dice += dice_score(prob, tgt, thr=0.3)
+                val_iou += iou_score(prob, tgt, thr=0.3)
         val_dice /= len(val_loader)
         val_iou  /= len(val_loader)
 
@@ -140,7 +153,9 @@ def train_segmentation(data_root, epochs=20, lr=1e-3, base=16):
     wandb.log({"best_dice": best_dice})
     wandb.finish()
 
-# ---------------- Main ----------------
+# ------------------------------------------------------------------
+# Main
+# ------------------------------------------------------------------
 if __name__ == "__main__":
     data_root = os.environ.get("LIDC_ROOT", "data/LIDC-IDRI-slices")
     train_segmentation(data_root)

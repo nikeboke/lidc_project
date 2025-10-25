@@ -1,0 +1,40 @@
+{
+  "os": "Linux-6.14.0-29-generic-x86_64-with-glibc2.39",
+  "python": "CPython 3.12.3",
+  "startedAt": "2025-10-22T20:19:10.361724Z",
+  "program": "/home/boeke/Desktop/lidc_project/scripts/models/unet3d.py",
+  "codePath": "scripts/models/unet3d.py",
+  "codePathLocal": "scripts/models/unet3d.py",
+  "git": {
+    "remote": "git@github.com:nikeboke/lidc_project.git",
+    "commit": "bdfc87c5aa4ed97c1ca5af866f4b96513d6f8c14"
+  },
+  "email": "simon.baur1992@gmail.com",
+  "root": "/home/boeke/Desktop/lidc_project",
+  "host": "gczwb54",
+  "executable": "/home/boeke/Desktop/lidc_project/lidc-env/bin/python",
+  "cpu_count": 16,
+  "cpu_count_logical": 22,
+  "gpu": "NVIDIA RTX 3000 Ada Generation Laptop GPU",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "1005867986944",
+      "used": "509018124288"
+    }
+  },
+  "memory": {
+    "total": "33066729472"
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA RTX 3000 Ada Generation Laptop GPU",
+      "memoryTotal": "8585740288",
+      "cudaCores": 4608,
+      "architecture": "Ada",
+      "uuid": "GPU-38df5557-9e8a-ad46-11af-49d984fd3e53"
+    }
+  ],
+  "cudaVersion": "12.2",
+  "writerId": "6kkybhpw1y5meoop7q1xgnujkwjqvrt1"
+}

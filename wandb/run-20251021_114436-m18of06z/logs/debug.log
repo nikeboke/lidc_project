@@ -1,0 +1,5 @@
+2025-10-21 11:44:36,620 INFO    MainThread:589409 [wandb_init.py:setup_run_log_directory():705] Logging user logs to /home/boeke/Desktop/lidc_project/wandb/run-20251021_114436-m18of06z/logs/debug.log
+2025-10-21 11:44:36,620 INFO    MainThread:589409 [wandb_init.py:setup_run_log_directory():706] Logging internal logs to /home/boeke/Desktop/lidc_project/wandb/run-20251021_114436-m18of06z/logs/debug-internal.log
+2025-10-21 11:44:36,620 INFO    MainThread:589409 [wandb_init.py:init():832] calling init triggers
+2025-10-21 11:44:36,620 INFO    MainThread:589409 [wandb_init.py:init():837] wandb.init called with sweep_config: {}
+config: {'epochs': 20, 'lr': 0.001, 'base': 16, 'agg': 'soft', '_wandb': {}}

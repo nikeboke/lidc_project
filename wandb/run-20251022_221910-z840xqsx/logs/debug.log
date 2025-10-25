@@ -1,0 +1,26 @@
+2025-10-22 22:19:10,362 INFO    MainThread:7738 [wandb_setup.py:_flush():81] Current SDK version is 0.22.2
+2025-10-22 22:19:10,362 INFO    MainThread:7738 [wandb_setup.py:_flush():81] Configure stats pid to 7738
+2025-10-22 22:19:10,362 INFO    MainThread:7738 [wandb_setup.py:_flush():81] Loading settings from /home/boeke/.config/wandb/settings
+2025-10-22 22:19:10,362 INFO    MainThread:7738 [wandb_setup.py:_flush():81] Loading settings from /home/boeke/Desktop/lidc_project/wandb/settings
+2025-10-22 22:19:10,362 INFO    MainThread:7738 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2025-10-22 22:19:10,363 INFO    MainThread:7738 [wandb_init.py:setup_run_log_directory():705] Logging user logs to /home/boeke/Desktop/lidc_project/wandb/run-20251022_221910-z840xqsx/logs/debug.log
+2025-10-22 22:19:10,363 INFO    MainThread:7738 [wandb_init.py:setup_run_log_directory():706] Logging internal logs to /home/boeke/Desktop/lidc_project/wandb/run-20251022_221910-z840xqsx/logs/debug-internal.log
+2025-10-22 22:19:10,363 INFO    MainThread:7738 [wandb_init.py:init():832] calling init triggers
+2025-10-22 22:19:10,363 INFO    MainThread:7738 [wandb_init.py:init():837] wandb.init called with sweep_config: {}
+config: {'agg': 'soft', 'epochs': 20, 'lr': 0.001, '_wandb': {}}
+2025-10-22 22:19:10,363 INFO    MainThread:7738 [wandb_init.py:init():880] starting backend
+2025-10-22 22:19:10,567 INFO    MainThread:7738 [wandb_init.py:init():883] sending inform_init request
+2025-10-22 22:19:10,571 INFO    MainThread:7738 [wandb_init.py:init():891] backend started and connected
+2025-10-22 22:19:10,572 INFO    MainThread:7738 [wandb_init.py:init():961] updated telemetry
+2025-10-22 22:19:10,577 INFO    MainThread:7738 [wandb_init.py:init():985] communicating run to backend with 90.0 second timeout
+2025-10-22 22:19:11,174 INFO    MainThread:7738 [wandb_init.py:init():1036] starting run threads in backend
+2025-10-22 22:19:11,226 INFO    MainThread:7738 [wandb_run.py:_console_start():2509] atexit reg
+2025-10-22 22:19:11,226 INFO    MainThread:7738 [wandb_run.py:_redirect():2357] redirect: wrap_raw
+2025-10-22 22:19:11,226 INFO    MainThread:7738 [wandb_run.py:_redirect():2426] Wrapping output streams.
+2025-10-22 22:19:11,226 INFO    MainThread:7738 [wandb_run.py:_redirect():2449] Redirects installed.
+2025-10-22 22:19:11,229 INFO    MainThread:7738 [wandb_init.py:init():1076] run started, returning control to user process
+2025-10-22 23:11:37,537 INFO    MainThread:7738 [wandb_run.py:_finish():2275] finishing run sbaur/lidc_project/z840xqsx
+2025-10-22 23:11:37,537 INFO    MainThread:7738 [wandb_run.py:_atexit_cleanup():2474] got exitcode: 0
+2025-10-22 23:11:37,538 INFO    MainThread:7738 [wandb_run.py:_restore():2456] restore
+2025-10-22 23:11:37,538 INFO    MainThread:7738 [wandb_run.py:_restore():2462] restore done
+2025-10-22 23:11:38,492 INFO    MainThread:7738 [wandb_run.py:_footer_sync_info():3872] logging synced files

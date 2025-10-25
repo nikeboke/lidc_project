@@ -1,0 +1,9 @@
+/home/boeke/Desktop/lidc_project/lidc-env/lib/python3.12/site-packages/torch/cuda/__init__.py:182: UserWarning: CUDA initialization: CUDA unknown error - this may be due to an incorrectly set up environment, e.g. changing env variable CUDA_VISIBLE_DEVICES after program start. Setting the available devices to be zero. (Triggered internally at /pytorch/c10/cuda/CUDAFunctions.cpp:119.)
+  return torch._C._cuda_getDeviceCount() > 0
+Epoch 1/20: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2104/2104 [18:37:05<00:00, 31.86s/it]
+Epoch 1: loss=0.3846, val Dice=0.4387, val IoU=0.3155
+✓ Saved best model (Dice=0.4387)
+Epoch 2/20: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2104/2104 [1:51:41<00:00,  3.19s/it]
+Epoch 2: loss=0.2078, val Dice=0.4462, val IoU=0.3299
+✓ Saved best model (Dice=0.4462)
+Epoch 3/20:  63%|█████████████████████████████████████████████████████████████████████████████████                                               | 1333/2104 [34:37<1:09:42,  5.42s/it]

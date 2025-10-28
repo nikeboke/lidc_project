@@ -1,3 +1,4 @@
+# scripts/models/unet3d.py
 import os, random, argparse
 import numpy as np
 import torch
@@ -6,7 +7,9 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, Subset
 from tqdm import tqdm
 import wandb
-from dataloader import LIDCKaggleDataset
+from scripts.metrics import soft_dice_loss_from_logits, dice_score, iou_score
+from data.dataloader import LIDCKaggleDataset
+
 
 
 # -------- 3D U-Net (minimal, single-channel in an out

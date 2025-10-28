@@ -1,0 +1,26 @@
+{
+  "os": "Linux-6.14.0-29-generic-x86_64-with-glibc2.39",
+  "python": "CPython 3.12.3",
+  "startedAt": "2025-10-28T16:59:42.456670Z",
+  "program": "-m scripts.main",
+  "git": {
+    "remote": "git@github.com:nikeboke/lidc_project.git",
+    "commit": "fd1f887aa95b8a5f7fc39eefc9ce3d481812022b"
+  },
+  "email": "simon.baur1992@gmail.com",
+  "root": "/home/boeke/Desktop/lidc_project",
+  "host": "gczwb54",
+  "executable": "/home/boeke/Desktop/lidc_project/lidc-env/bin/python3",
+  "cpu_count": 16,
+  "cpu_count_logical": 22,
+  "disk": {
+    "/": {
+      "total": "1005867986944",
+      "used": "510254104576"
+    }
+  },
+  "memory": {
+    "total": "33066729472"
+  },
+  "writerId": "3b9smhi4an9tw1xtza874bys9ff98fql"
+}

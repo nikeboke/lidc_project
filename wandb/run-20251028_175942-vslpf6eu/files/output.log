@@ -1,0 +1,3 @@
+/home/boeke/Desktop/lidc_project/lidc-env/lib/python3.12/site-packages/torch/cuda/__init__.py:827: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+Epoch 1/20:  99%|██████████████████████████▋| 2078/2104 [01:50<00:01, 20.05it/s]

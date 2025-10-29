@@ -4,3 +4,9 @@
 {"time":"2025-10-28T17:59:43.037694153+01:00","level":"INFO","msg":"stream: started","id":"vslpf6eu"}
 {"time":"2025-10-28T17:59:43.037870437+01:00","level":"INFO","msg":"writer: started","stream_id":"vslpf6eu"}
 {"time":"2025-10-28T17:59:43.037917705+01:00","level":"INFO","msg":"sender: started","stream_id":"vslpf6eu"}
+{"time":"2025-10-28T18:42:57.905279792+01:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"updating run metadata","runtime_seconds":0.001093666}],"total_operations":1}}
+{"time":"2025-10-28T18:42:58.908087357+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-10-28T18:42:59.226970148+01:00","level":"INFO","msg":"stream: closing","id":"vslpf6eu"}
+{"time":"2025-10-28T18:42:59.226982031+01:00","level":"INFO","msg":"handler: closed","stream_id":"vslpf6eu"}
+{"time":"2025-10-28T18:42:59.227043682+01:00","level":"INFO","msg":"sender: closed","stream_id":"vslpf6eu"}
+{"time":"2025-10-28T18:42:59.227050554+01:00","level":"INFO","msg":"stream: closed","id":"vslpf6eu"}

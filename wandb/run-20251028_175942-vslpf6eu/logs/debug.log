@@ -19,3 +19,8 @@ config: {'agg': 'soft', 'epochs': 20, 'lr': 0.001, '_wandb': {}}
 2025-10-28 17:59:43,400 INFO    MainThread:788191 [wandb_run.py:_redirect():2426] Wrapping output streams.
 2025-10-28 17:59:43,400 INFO    MainThread:788191 [wandb_run.py:_redirect():2449] Redirects installed.
 2025-10-28 17:59:43,403 INFO    MainThread:788191 [wandb_init.py:init():1076] run started, returning control to user process
+2025-10-28 18:42:57,903 INFO    MainThread:788191 [wandb_run.py:_finish():2275] finishing run sbaur/lidc_project/vslpf6eu
+2025-10-28 18:42:57,904 INFO    MainThread:788191 [wandb_run.py:_atexit_cleanup():2474] got exitcode: 0
+2025-10-28 18:42:57,904 INFO    MainThread:788191 [wandb_run.py:_restore():2456] restore
+2025-10-28 18:42:57,904 INFO    MainThread:788191 [wandb_run.py:_restore():2462] restore done
+2025-10-28 18:42:59,226 INFO    MainThread:788191 [wandb_run.py:_footer_sync_info():3872] logging synced files

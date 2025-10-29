@@ -1,7 +1,7 @@
 # environment
 lidc-env/
 # data + results
-data/
+wandb/
 results/
 # python cache
 __pycache__/

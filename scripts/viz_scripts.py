@@ -1,4 +1,4 @@
-# scripts/viz_predictions.py
+
 import os, random
 import numpy as np
 import torch
@@ -8,15 +8,14 @@ import matplotlib.pyplot as plt
 from torch.utils.data import Subset, DataLoader
 from skimage import measure
 import imageio.v2 as imageio  # for GIF creation
-from dataloader import LIDCKaggleDataset
+from data.dataloader import LIDCKaggleDataset
 
 
-# ---- configuration (must match training) ----
+#  config (must match training) 
 TARGET_SHAPE = (16, 128, 128)     # (D, H, W)
 AGG = "soft"                      # label aggregation: "soft" or "vote2"
 CKPT_PATH = "results/models/unet3d_best.pth"
 
-# ---- visualization settings ----
 GREEN_IS_PRED = True              # green = prediction contours, red = GT
 GIF_DURATION  = 0.35              # slower animation
 SLICE_GT_THR  = 0.5               # threshold for binarizing GT

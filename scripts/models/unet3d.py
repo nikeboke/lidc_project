@@ -9,6 +9,8 @@ import torch.nn as nn
 #Labels: Soft-probability masks (average of 4 expert annotations)
 #Uncertainty: Voxel-wise variance of masks = annotator disagreement it models aleatoric uncertainty that’s already in the data.
 
+
+
 class DoubleConv(nn.Module):
     def __init__(self, in_c, out_c):
         super().__init__()
